@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  main:
+    driver: bridge
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine   
+    ports:
+     - "5672:5672"
+     - "15672:15672"
+    volumes:
+     - "rabbitmq_data:/data"
+    networks:
+     - main
+  userservice.api:
+    image: ${DOCKER_REGISTRY-}userserviceapi
+    build:
+      context: .
+      dockerfile: src/UserService.Api/Dockerfile
+    networks:
+     - main
+  profileservice.api:
+    image: ${DOCKER_REGISTRY-}profileserviceapi
+    build:
+      context: .
+      dockerfile: src/ProfileService.Api/Dockerfile
+    networks:
+     - main
+
+volumes:
+ rabbitmq_data:
