@@ -6,12 +6,7 @@ networks:
 
 services:
   rabbitmq:
-    image: rabbitmq:3-management-alpine   
-    ports:
-     - "5672:5672"
-     - "15672:15672"
-    volumes:
-     - "rabbitmq_data:/data"
+    image: rabbitmq:3-management-alpine          
     networks:
      - main
   userservice.api:
@@ -19,6 +14,8 @@ services:
     build:
       context: .
       dockerfile: src/UserService.Api/Dockerfile
+    depends_on:
+     - rabbitmq
     networks:
      - main
   profileservice.api:
@@ -26,8 +23,8 @@ services:
     build:
       context: .
       dockerfile: src/ProfileService.Api/Dockerfile
+    depends_on:
+     - rabbitmq
     networks:
      - main
 
-volumes:
- rabbitmq_data:
