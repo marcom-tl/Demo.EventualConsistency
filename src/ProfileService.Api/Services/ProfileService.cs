@@ -26,7 +26,7 @@ namespace ProfileService.Api.Services
         {
             var profile= await _repository.CreateProfileAsync(_mapper.Map<DomainProfile>(obj));
 
-            await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileMessage>(profile), Consts.SERVICE_NAME));
+            await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileCreatedMessage>(profile), Consts.SERVICE_NAME));
 
             return _mapper.Map<ProfileModel>(profile);
         }
@@ -43,7 +43,10 @@ namespace ProfileService.Api.Services
 
         public async Task UpdateProfileAsync(ProfileModel obj)
         {
-            
+            await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj));
+
+            await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
+
         }
     }
 }

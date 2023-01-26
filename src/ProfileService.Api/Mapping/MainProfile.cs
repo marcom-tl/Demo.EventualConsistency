@@ -11,7 +11,7 @@ namespace ProfileService.Api.Mapping
         {
             CreateMap<DomainPofile, ProfileModel>().ReverseMap();
 
-            CreateMap<DomainPofile, ProfileMessage>().ReverseMap();
+            CreateMap<DomainPofile, ProfileCreatedMessage>().ReverseMap();
         }
     }
 }

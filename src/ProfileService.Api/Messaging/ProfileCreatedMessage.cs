@@ -3,7 +3,7 @@ using ProfileService.Api.Mapping;
 
 namespace ProfileService.Api.Messaging
 {
-    public class ProfileMessage:IMessage
+    public class ProfileCreatedMessage:IMessage
     {
         #region IMessage Members
         public int Version => 1;
