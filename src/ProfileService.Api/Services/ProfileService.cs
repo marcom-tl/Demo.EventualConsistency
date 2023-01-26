@@ -31,14 +31,16 @@ namespace ProfileService.Api.Services
             return _mapper.Map<ProfileModel>(profile);
         }
 
-        public async Task DeleteProfile(int objId)
+        public async Task DeleteProfile(string uuid)
         {
-            throw new NotImplementedException();
+            _repository.DeleteProfile(uuid);
+
         }
 
-        public async Task<ProfileModel> GetProfileAsync(int objId)
+        public async Task<ProfileModel?> GetProfileAsync(string uuid)
         {
-            throw new NotImplementedException();
+            var profile =await _repository.GetProfileAsync(uuid);
+            return _mapper.Map<ProfileModel>(profile);
         }
 
         public async Task UpdateProfileAsync(ProfileModel obj)
@@ -46,7 +48,6 @@ namespace ProfileService.Api.Services
             await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj));
 
             await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
-
         }
     }
 }

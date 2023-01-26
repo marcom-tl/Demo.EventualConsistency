@@ -1,43 +1,63 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProfileService.Api.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProfileService.Api.Controllers
 {
+    using Services;
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        // GET: api/<ProfileController>
+        private readonly IProfileService _profileService;
+
+        public ProfileController(IProfileService profileService)
+        {
+            _profileService = profileService;
+        }
+        // GET: api/<ProfileController>/uuid
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetById(string uuid)
         {
-            return new string[] { "value1", "value2" };
+            if (string.IsNullOrEmpty(uuid))
+                return BadRequest($"invalid uuid");
+            var profile = await _profileService.GetProfileAsync(uuid);
+            if (profile!=null)
+                return Ok(profile);
+            else
+                return NotFound(uuid);
+            
         }
-
-        // GET api/<ProfileController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+        
         // POST api/<ProfileController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> CreateProfile([FromBody] ProfileModel profile)
         {
+            var createdProfile =await _profileService.CreateProfileAsync(profile);
+            return Ok(createdProfile);
         }
 
-        // PUT api/<ProfileController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<ProfileController>/uuid
+        [HttpPut("{uuid}")]
+        public async Task<IActionResult> UpdateProfile(string uuid, [FromBody] ProfileModel profile)
         {
+            var oldProfile = await _profileService.GetProfileAsync(uuid);
+            if (oldProfile == null)
+                return NotFound(uuid);
+            await _profileService.UpdateProfileAsync(profile);
+            return Ok();
         }
 
-        // DELETE api/<ProfileController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<ProfileController>/uuid
+        [HttpDelete("{uuid}")]
+        public async Task<IActionResult> Delete(string uuid)
         {
+            var oldProfile = await _profileService.GetProfileAsync(uuid);
+            if (oldProfile == null)
+                return NotFound(uuid);
+            await _profileService.DeleteProfile(uuid);
+            return Ok();
         }
     }
 }

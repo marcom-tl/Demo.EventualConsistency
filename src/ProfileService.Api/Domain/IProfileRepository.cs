@@ -4,9 +4,9 @@
     {
         Task<Profile> CreateProfileAsync(Profile obj);
 
-        Task DeleteProfile(int objId);
+        Task DeleteProfile(string uuid);
 
-        Task<Profile> GetProfileAsync(int objId);
+        Task<Profile> GetProfileAsync(string uuid);
 
         Task UpdateProfileAsync(Profile obj);
     }

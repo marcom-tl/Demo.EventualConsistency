@@ -7,9 +7,9 @@ namespace ProfileService.Api.Services
     {
         Task<ProfileModel> CreateProfileAsync(ProfileModel obj);
 
-        Task DeleteProfile(int objId);
+        Task DeleteProfile(string uuid);
 
-        Task<ProfileModel> GetProfileAsync(int objId);
+        Task<ProfileModel?> GetProfileAsync(string uuid);
 
         Task UpdateProfileAsync(ProfileModel obj);
     }
