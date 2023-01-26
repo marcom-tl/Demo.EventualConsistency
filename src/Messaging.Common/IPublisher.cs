@@ -2,6 +2,6 @@
 {
     public interface IPublisher
     {
-
+        Task PublishAsync(Envelope message);
     }
 }

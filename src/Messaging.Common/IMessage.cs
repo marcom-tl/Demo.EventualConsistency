@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Messaging.Common
 {
-    public  class BaseMessage
+    public interface IMessage
     {
-        public string Sender { get; set; }
+        int Version { get;  }
 
+        string Type { get;  }
     }
 }
