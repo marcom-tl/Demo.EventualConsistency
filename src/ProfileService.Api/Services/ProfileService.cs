@@ -5,6 +5,7 @@ using ProfileService.Api.Mapping;
 using ProfileService.Api.Messaging;
 using ProfileService.Api.Models;
 using DomainProfile= ProfileService.Api.Domain.Profile;
+
 namespace ProfileService.Api.Services
 {
     public class ProfileService: IProfileService
@@ -45,7 +46,8 @@ namespace ProfileService.Api.Services
 
         public async Task UpdateProfileAsync(ProfileModel obj)
         {
-            await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj));
+            var profile = await _repository.GetProfileAsync(obj.uuid);
+            await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj), profile);
 
             await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
         }

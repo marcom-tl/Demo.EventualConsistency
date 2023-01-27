@@ -16,7 +16,7 @@ namespace ProfileService.Api.Infrastructure
             {
                 obj.Uuid = _currentId.ToString();
             }
-            return _profiles.AddOrUpdate(obj.Uuid, obj, (key,current ) => current);
+            return _profiles.AddOrUpdate(obj.Uuid, obj, (key,current ) => obj);
         }
 
         public async Task DeleteProfile(string uuid)
@@ -30,9 +30,9 @@ namespace ProfileService.Api.Infrastructure
                 return obj;
         }
 
-        public async Task UpdateProfileAsync(Profile obj)
+        public async Task UpdateProfileAsync(Profile obj, Profile oldObj)
         {
-            _profiles.TryUpdate(obj.Uuid, obj, obj);
+            _profiles.AddOrUpdate(obj.Uuid, obj, (key, current) => obj);
         }
     }
 }

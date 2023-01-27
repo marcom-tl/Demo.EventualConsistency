@@ -25,9 +25,7 @@ namespace ProfileService.Api.Controllers
             var profile = await _profileService.GetProfileAsync(uuid);
             if (profile!=null)
                 return Ok(profile);
-            else
-                return NotFound(uuid);
-            
+            return NotFound(uuid);
         }
         
         // POST api/<ProfileController>

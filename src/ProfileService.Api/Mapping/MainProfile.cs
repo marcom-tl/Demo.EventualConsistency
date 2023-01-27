@@ -4,14 +4,16 @@ using ProfileService.Api.Models;
 namespace ProfileService.Api.Mapping
 {
     using  AutoMapper;
-    using DomainPofile=Domain.Profile;
+    using DomainProfile=Domain.Profile;
     public class MainProfile: Profile
     {
         public MainProfile()
         {
-            CreateMap<DomainPofile, ProfileModel>().ReverseMap();
+            CreateMap<DomainProfile, ProfileModel>().ReverseMap();
 
-            CreateMap<DomainPofile, ProfileCreatedMessage>().ReverseMap();
+            CreateMap<DomainProfile, ProfileCreatedMessage>().ReverseMap();
+
+            CreateMap<DomainProfile, ProfileUpdatedMessage>().ReverseMap();
         }
     }
 }
