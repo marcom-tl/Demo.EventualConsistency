@@ -7,11 +7,12 @@ namespace ProfileService.Api.Infrastructure
     public class InMemoryProfileRepository:IProfileRepository
     {
         private readonly object _currentIdLock = new();
-        private Guid _currentId = Guid.NewGuid();
+        
         private ConcurrentDictionary<string, Profile> _profiles=new();
 
         public async Task<Profile> CreateProfileAsync(Profile obj)
         {
+            var _currentId = Guid.NewGuid();
             lock (_currentIdLock)
             {
                 obj.Uuid = _currentId.ToString();
