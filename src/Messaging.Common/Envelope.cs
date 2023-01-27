@@ -9,26 +9,44 @@ namespace Messaging.Common
 {
     public  class Envelope
     {
-        public Envelope(IMessage message,string sender)
+        //public Envelope(IMessage message,string sender)
+        //{
+        //    Id=Guid.NewGuid();
+        //    CreatedAt = new DateTimeOffset(DateTime.UtcNow);
+        //    Sender = sender;
+        //    MessageVersion = message.Version;
+        //    Type = message.Type;
+        //    JsonContent = JsonConvert.SerializeObject(message);
+        //}
+
+        public Envelope()
         {
-            Id=Guid.NewGuid();
-            CreatedAt = new DateTimeOffset(DateTime.UtcNow);
-            Sender = sender;
-            MessageVersion = message.Version;
-            Type = message.Type;
-            JsonContent = JsonConvert.SerializeObject(message);
+            
         }
+        public Guid Id { get; set; }
+        public string Sender { get; set; }
 
-        public Guid Id { get;  }
-        public string Sender { get;  }
+        public string Type { get; set; }
 
-        public string Type { get;  }
+        public int MessageVersion { get; set; }
 
-        public int MessageVersion { get;  }
+        public DateTimeOffset CreatedAt { get; set; }
 
-        public DateTimeOffset CreatedAt { get; }
+        public string JsonContent { get; set; }
 
-        public string JsonContent { get;  }
+        public  static Envelope CreateEnvelope(IMessage message, string sender)
+        {
+            Envelope envelope = new Envelope()
+            { 
+                Id = Guid.NewGuid(),
+                CreatedAt = new DateTimeOffset(DateTime.UtcNow),
+                Sender = sender,
+                MessageVersion = message.Version,
+                Type = message.Type,
+                JsonContent = JsonConvert.SerializeObject(message),
+            };
+            return envelope;
+        }
 
     }
 }
