@@ -9,7 +9,7 @@ namespace ProfileService.Api.Messaging
         public string Type => Consts.TYPE_PROFILE_UPDATED;
 
 
-        public int Id { get; set; }
+        public int Uuid { get; set; }
         public string FistName { get; set; }
 
         public string LastName { get; set; }

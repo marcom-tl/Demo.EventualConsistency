@@ -1,3 +1,5 @@
+using MassTransit;
+using MassTransit.RabbitMqTransport;
 using Messaging.Common;
 using ProfileService.Api.Domain;
 using ProfileService.Api.Infrastructure;
@@ -17,7 +19,19 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //--------------
 builder.Services.AddSingleton<IProfileRepository, InMemoryProfileRepository>();
 builder.Services.AddScoped<IProfileService, ProfileService.Api.Services.ProfileService>();
-builder.Services.AddSingleton<IPublisher,StubPublisher>();
+//--------------
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq(configure:(delegate(IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator configurator)
+    {
+        configurator.Host("rabbitmq","/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+        configurator.ConfigureEndpoints(context);
+    }));
+});
 //--------------
 var app = builder.Build();
 
@@ -33,5 +47,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();

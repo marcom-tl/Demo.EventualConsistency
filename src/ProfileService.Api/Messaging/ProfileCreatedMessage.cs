@@ -11,7 +11,7 @@ namespace ProfileService.Api.Messaging
 
         #endregion
 
-        public int Id { get; set; }
+        public int Uuid { get; set; }
         public string FistName { get; set; }
 
         public string LastName { get; set; }

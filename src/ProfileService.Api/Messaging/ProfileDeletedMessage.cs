@@ -8,6 +8,6 @@ namespace ProfileService.Api.Messaging
         public int Version => 1;
         public string Type => Consts.TYPE_PROFILE_DELETED;
 
-        public int Id { get; set; }
+        public int Uuid { get; set; }
     }
 }

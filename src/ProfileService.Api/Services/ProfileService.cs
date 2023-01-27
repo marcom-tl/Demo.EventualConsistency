@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MassTransit;
 using Messaging.Common;
 using ProfileService.Api.Domain;
 using ProfileService.Api.Mapping;
@@ -11,12 +12,12 @@ namespace ProfileService.Api.Services
     public class ProfileService: IProfileService
     {
         private readonly IProfileRepository _repository;
-        private readonly IPublisher _publisher;
+        private readonly IPublishEndpoint _publisher;
         private readonly IMapper _mapper;
 
         public ProfileService(
-            IProfileRepository repository, 
-            IPublisher publisher, 
+            IProfileRepository repository,
+            IPublishEndpoint publisher, 
             IMapper mapper)
         {
             _repository = repository;
@@ -27,7 +28,7 @@ namespace ProfileService.Api.Services
         {
             var profile= await _repository.CreateProfileAsync(_mapper.Map<DomainProfile>(obj));
 
-            await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileCreatedMessage>(profile), Consts.SERVICE_NAME));
+            await _publisher.Publish(new Envelope(_mapper.Map<ProfileCreatedMessage>(profile), Consts.SERVICE_NAME));
 
             return _mapper.Map<ProfileModel>(profile);
         }
@@ -49,7 +50,7 @@ namespace ProfileService.Api.Services
             var profile = await _repository.GetProfileAsync(obj.uuid);
             await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj), profile);
 
-            await _publisher.PublishAsync(new Envelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
+            await _publisher.Publish(new Envelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
         }
     }
 }
