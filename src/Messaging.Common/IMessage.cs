@@ -11,5 +11,7 @@ namespace Messaging.Common
         int Version { get;  }
 
         string Type { get;  }
+
+        public string Sender { get; set; }
     }
 }

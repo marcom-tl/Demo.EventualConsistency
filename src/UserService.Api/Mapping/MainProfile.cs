@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Messaging.Common;
 using UserService.Api.Domain;
-using UserService.Api.Messaging;
+
 using UserService.Api.Models;
 
 namespace UserService.Api.Mapping

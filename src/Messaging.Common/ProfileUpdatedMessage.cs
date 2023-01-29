@@ -1,16 +1,16 @@
 ﻿using Messaging.Common;
-using UserService.Api.Mapping;
 
-namespace UserService.Api.Messaging
+namespace Messaging.Common
 {
-    public class UserUpdatedMessage:IMessage
+    public class ProfileUpdatedMessage:IMessage
     {
         public int Version => 1;
-        public string Type => Consts.TYPE_USER_UPDATED;
+        public string Type => MessagesConsts.TYPE_PROFILE_UPDATED;
+        public string Sender { get; set; }
 
 
         public string Uuid { get; set; }
-        public string FistName { get; set; }
+        public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
@@ -23,5 +23,9 @@ namespace UserService.Api.Messaging
         // IMPROVEMENT: send the old and the new version of the profile
         // public Profile OldProfile { get; set; }
         // public Profile NewProfile { get; set; }
+        public override string ToString()
+        {
+            return $"{Sender}=>{Uuid}-{FirstName}-{LastName}-{Email}-{Dob}";
+        }
     }
 }

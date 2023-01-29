@@ -3,7 +3,6 @@ using MassTransit;
 using Messaging.Common;
 using ProfileService.Api.Domain;
 using ProfileService.Api.Mapping;
-using ProfileService.Api.Messaging;
 using ProfileService.Api.Models;
 using DomainProfile= ProfileService.Api.Domain.Profile;
 
@@ -28,7 +27,9 @@ namespace ProfileService.Api.Services
         {
             var profile= await _repository.CreateProfileAsync(_mapper.Map<DomainProfile>(obj));
 
-            await _publisher.Publish( Envelope.CreateEnvelope(_mapper.Map<ProfileCreatedMessage>(profile), Consts.SERVICE_NAME));
+            var message = _mapper.Map<ProfileCreatedMessage>(profile);
+            message.Sender = Consts.SERVICE_NAME;
+            await _publisher.Publish( _mapper.Map<ProfileCreatedMessage>(profile));
 
             return _mapper.Map<ProfileModel>(profile);
         }
@@ -48,8 +49,9 @@ namespace ProfileService.Api.Services
         public async Task UpdateProfileAsync(ProfileModel obj)
         {
             await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj));
-
-            await _publisher.Publish(Envelope.CreateEnvelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
+            var message = _mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj));
+            message.Sender = Consts.SERVICE_NAME;
+            await _publisher.Publish(message);
         }
     }
 }

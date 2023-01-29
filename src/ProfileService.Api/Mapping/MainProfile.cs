@@ -1,6 +1,7 @@
-﻿using ProfileService.Api.Messaging;
+﻿
 using ProfileService.Api.Models;
 using AutoMapper;
+using Messaging.Common;
 
 namespace ProfileService.Api.Mapping
 {

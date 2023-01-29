@@ -2,8 +2,8 @@
 {
     public class ProfileModel
     {
-        public string uuid { get; set; }
-        public string FistName { get; set; }
+        public string Uuid { get; set; }
+        public string FirstName { get; set; }
 
         public string LastName { get; set; }
 

@@ -1,9 +1,9 @@
+using System.Reflection;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
 using Messaging.Common;
 using ProfileService.Api.Domain;
 using ProfileService.Api.Infrastructure;
-using ProfileService.Api.Messaging;
 using ProfileService.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +22,8 @@ builder.Services.AddScoped<IProfileService, ProfileService.Api.Services.ProfileS
 //--------------
 builder.Services.AddMassTransit(x =>
 {
+    var entryAssembly = Assembly.GetEntryAssembly();
+    x.AddConsumers(entryAssembly);
     x.UsingRabbitMq(configure:(delegate(IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator configurator)
     {
         configurator.Host("rabbitmq","/", h =>

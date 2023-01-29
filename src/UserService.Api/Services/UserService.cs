@@ -3,7 +3,6 @@ using MassTransit;
 using Messaging.Common;
 using UserService.Api.Domain;
 using UserService.Api.Mapping;
-using UserService.Api.Messaging;
 using UserService.Api.Models;
 
 namespace UserService.Api.Services
@@ -26,11 +25,13 @@ namespace UserService.Api.Services
 
         public async Task<UserModel> CreateUserAsync(UserModel obj)
         {
-            var profile = await _repository.CreateUserAsync(_mapper.Map<User>(obj));
+            var user = await _repository.CreateUserAsync(_mapper.Map<User>(obj));
 
-            await _publisher.Publish(Envelope.CreateEnvelope(_mapper.Map<UserCreatedMessage>(profile), Consts.SERVICE_NAME));
+            var message = _mapper.Map<UserCreatedMessage>(user);
+            message.Sender = Consts.SERVICE_NAME;
+            await _publisher.Publish(message);
 
-            return _mapper.Map<UserModel>(profile);
+            return _mapper.Map<UserModel>(user);
         }
 
         public async Task DeleteUser(string uuid)
@@ -47,8 +48,9 @@ namespace UserService.Api.Services
         public async Task UpdateUserAsync(UserModel obj)
         {
             await _repository.UpdateUserAsync(_mapper.Map<User>(obj));
-
-            await _publisher.Publish(Envelope.CreateEnvelope(_mapper.Map<UserUpdatedMessage>(_mapper.Map<User>(obj)), Consts.SERVICE_NAME));
+            var message = _mapper.Map<UserUpdatedMessage>(_mapper.Map<User>(obj));
+            message.Sender = Consts.SERVICE_NAME;
+            await _publisher.Publish(message);
         }
     }
 }

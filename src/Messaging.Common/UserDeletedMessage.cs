@@ -1,12 +1,12 @@
 ﻿using Messaging.Common;
-using UserService.Api.Mapping;
 
-namespace UserService.Api.Messaging
+namespace Messaging.Common
 {
     public class UserDeletedMessage:IMessage
     {
         public int Version => 1;
-        public string Type => Consts.TYPE_USER_DELETED;
+        public string Type => MessagesConsts.TYPE_USER_DELETED;
+        public string Sender { get; set; }
 
         public string Uuid { get; set; }
     }
