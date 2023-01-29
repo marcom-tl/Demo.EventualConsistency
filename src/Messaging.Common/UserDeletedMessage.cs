@@ -8,6 +8,6 @@ namespace Messaging.Common
         public string Type => MessagesConsts.TYPE_USER_DELETED;
         public string Sender { get; set; }
 
-        public string Uuid { get; set; }
+        public string Id { get; set; }
     }
 }

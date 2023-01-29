@@ -13,9 +13,9 @@ namespace ProfileService.Api.Infrastructure
         {
             var _currentId = Guid.NewGuid();
             
-            obj.Uuid = _currentId.ToString();
+            obj.Id = _currentId.ToString();
             
-            return _profiles.AddOrUpdate(obj.Uuid, obj, (key,current ) => obj);
+            return _profiles.AddOrUpdate(obj.Id, obj, (key,current ) => obj);
         }
 
         public async Task DeleteProfile(string uuid)
@@ -29,9 +29,17 @@ namespace ProfileService.Api.Infrastructure
                 return obj;
         }
 
+        public async Task<Profile> GetProfileByUserIdAsync(string userId)
+        {
+            var obj = _profiles.FirstOrDefault(x => x.Value.UserId == userId).Value;
+            if (obj!=null)
+                return obj;
+            return null;
+        }
+
         public async Task UpdateProfileAsync(Profile obj)
         {
-            _profiles.AddOrUpdate(obj.Uuid, obj, (key, current) => obj);
+            _profiles.AddOrUpdate(obj.Id, obj, (key, current) => obj);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Messaging.Common
 
         #endregion
 
-        public string Uuid { get; set; }
+        public string Id { get; set; }
 
         public string UserName { get; set; }
 
@@ -23,7 +23,7 @@ namespace Messaging.Common
 
         public override string ToString()
         {
-            return $"{Sender}=>{Uuid}-{UserName}-{Email}-{Disabled}";
+            return $"{Sender}=>{Id}-{UserName}-{Email}-{Disabled}";
         }
 
     }

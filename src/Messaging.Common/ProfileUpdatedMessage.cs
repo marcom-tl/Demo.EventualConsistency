@@ -9,7 +9,7 @@ namespace Messaging.Common
         public string Sender { get; set; }
 
 
-        public string Uuid { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -25,7 +25,7 @@ namespace Messaging.Common
         // public Profile NewProfile { get; set; }
         public override string ToString()
         {
-            return $"{Sender}=>{Uuid}-{FirstName}-{LastName}-{Email}-{Dob}";
+            return $"{Sender}=>{Id}-{FirstName}-{LastName}-{Email}-{Dob}";
         }
     }
 }

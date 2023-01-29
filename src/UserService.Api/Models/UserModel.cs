@@ -2,7 +2,7 @@
 {
     public class UserModel
     {
-        public string Uuid { get; set; }
+        public string? Id { get; set; }
 
         public string UserName { get; set; }
 

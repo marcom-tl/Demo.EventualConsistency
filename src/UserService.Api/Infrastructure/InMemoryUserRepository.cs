@@ -12,9 +12,9 @@ namespace UserService.Api.Infrastructure
         {
             var _currentId = Guid.NewGuid();
 
-            obj.Uuid = _currentId.ToString();
+            obj.Id = _currentId.ToString();
 
-            return _users.AddOrUpdate(obj.Uuid, obj, (key, current) => obj);
+            return _users.AddOrUpdate(obj.Id, obj, (key, current) => obj);
         }
 
         public async Task DeleteUser(string uuid)
@@ -30,7 +30,7 @@ namespace UserService.Api.Infrastructure
 
         public async Task UpdateUserAsync(User obj)
         {
-            _users.AddOrUpdate(obj.Uuid, obj, (key, current) => obj);
+            _users.AddOrUpdate(obj.Id, obj, (key, current) => obj);
         }
     }
 }

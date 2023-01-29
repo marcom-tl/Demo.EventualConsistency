@@ -9,10 +9,10 @@ namespace Messaging.Common
         public string Type => MessagesConsts.TYPE_PROFILE_DELETED;
         public string Sender { get; set; }
 
-        public string Uuid { get; set; }
+        public string Id { get; set; }
         public override string ToString()
         {
-            return $"{Sender}=>{Uuid}";
+            return $"{Sender}=>{Id}";
         }
     }
 }

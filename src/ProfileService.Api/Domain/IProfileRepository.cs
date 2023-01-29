@@ -8,6 +8,8 @@
 
         Task<Profile> GetProfileAsync(string uuid);
 
+        Task<Profile> GetProfileByUserIdAsync(string userId);
+
         Task UpdateProfileAsync(Profile obj);
     }
 }
