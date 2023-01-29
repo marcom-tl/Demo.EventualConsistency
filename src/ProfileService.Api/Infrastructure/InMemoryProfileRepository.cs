@@ -6,17 +6,15 @@ namespace ProfileService.Api.Infrastructure
 {
     public class InMemoryProfileRepository:IProfileRepository
     {
-        private readonly object _currentIdLock = new();
-        
+
         private ConcurrentDictionary<string, Profile> _profiles=new();
 
         public async Task<Profile> CreateProfileAsync(Profile obj)
         {
             var _currentId = Guid.NewGuid();
-            lock (_currentIdLock)
-            {
-                obj.Uuid = _currentId.ToString();
-            }
+            
+            obj.Uuid = _currentId.ToString();
+            
             return _profiles.AddOrUpdate(obj.Uuid, obj, (key,current ) => obj);
         }
 
@@ -31,7 +29,7 @@ namespace ProfileService.Api.Infrastructure
                 return obj;
         }
 
-        public async Task UpdateProfileAsync(Profile obj, Profile oldObj)
+        public async Task UpdateProfileAsync(Profile obj)
         {
             _profiles.AddOrUpdate(obj.Uuid, obj, (key, current) => obj);
         }

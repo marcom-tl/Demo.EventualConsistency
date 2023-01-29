@@ -47,8 +47,7 @@ namespace ProfileService.Api.Services
 
         public async Task UpdateProfileAsync(ProfileModel obj)
         {
-            var profile = await _repository.GetProfileAsync(obj.uuid);
-            await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj), profile);
+            await _repository.UpdateProfileAsync(_mapper.Map<DomainProfile>(obj));
 
             await _publisher.Publish(Envelope.CreateEnvelope(_mapper.Map<ProfileUpdatedMessage>(_mapper.Map<DomainProfile>(obj)), Consts.SERVICE_NAME));
         }
