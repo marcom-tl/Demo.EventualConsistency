@@ -48,6 +48,9 @@ namespace UserService.Api.Services
         public async Task UpdateUserAsync(UserModel obj)
         {
             await _repository.UpdateUserAsync(_mapper.Map<User>(obj));
+            //-----------
+            await Console.Out.WriteLineAsync($"{Consts.SERVICE_NAME}- UpdateUserAsync Done!");
+            //-----------
             var message = _mapper.Map<UserUpdatedMessage>(_mapper.Map<User>(obj));
             message.Sender = Consts.SERVICE_NAME;
             await _publisher.Publish(message);
