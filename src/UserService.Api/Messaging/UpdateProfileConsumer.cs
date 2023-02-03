@@ -4,6 +4,9 @@ using UserService.Api.Mapping;
 
 namespace UserService.Api.Messaging
 {
+    /// <summary>
+    /// fake change
+    /// </summary>
     public class UpdateProfileConsumer:IConsumer<ProfileUpdatedMessage>
     {
         public Task Consume(ConsumeContext<ProfileUpdatedMessage> context)
